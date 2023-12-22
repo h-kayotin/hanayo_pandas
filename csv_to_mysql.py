@@ -41,11 +41,9 @@ class PosUpPD:
     def __init__(self, file):
         conn_info = f"mysql+pymysql://{user_name}:{user_pwd}@{host_inner}:{port_inner}/{db_name}?charset=utf8mb4"
         self.engine = create_engine(conn_info)
-        # 读取csv，自定义df对象的列名
+        # 读取csv，自定义df对象的列名,指定了跳过第一行
         self.csv_df = pd.read_csv(file, index_col=False, encoding='gbk', names=db_columns, thousands=",",
-                                  low_memory=False)
-        # 删除第一行
-        self.csv_df = self.csv_df.drop(0)
+                                  low_memory=False, skiprows=[0])
         self.csv_df['pos_no_tax'] = self.csv_df['pos_no_tax'].map(con_tax)
         self.csv_df.to_sql(tb_name, self.engine, chunksize=10000, index=False,
                            if_exists='append')

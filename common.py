@@ -5,7 +5,11 @@ Author: hanayo
 Date： 2023/12/22
 """
 
+import pandas as pd
 
+# 从csv读取数据，创建Dataframe对象
+csv_df = pd.read_csv("filename.csv", index_col=False, encoding='gbk', names=["db_columns", "2"], thousands=",",
+                     low_memory=False, skiprows=[0])
 """
 
 常用的参数如下：
@@ -19,5 +23,6 @@ Date： 2023/12/22
 - `skipfooter`：要跳过的末尾行数。
 - `nrows`：需要读取的行数。
 - `na_values`：哪些值被视为空值。
+- names:指定列名
 
 """
